@@ -6,6 +6,7 @@ class Fruits:
         self.name = name
         self.number_of_seeds = number_of_seeds
         self.fruit_texture = fruit_texture
+#germinate, 
     
     
     def make_juice(self):        
