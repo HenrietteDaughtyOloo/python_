@@ -1,10 +1,11 @@
 class Account:
     bank_name = "Absa"
+    transaction_charge_percent = 10
 
     #Add attributes deposits and withdrawals in the init method which are empty
     #lists by default and another attribute loan_balance which is zero by default.
 
-    def __init__(self, balance, account_name,account_number,deposits,withdrawals,loan_balance):
+    def __init__(self, balance, account_name,account_number):
         self.balance = balance
         self.account_name = account_name
         self.account_number = account_number
@@ -48,6 +49,9 @@ class Account:
             print(transaction)
     
     def borrow_loan(self, amount):
+        total_deposits=sum([t[amount] for t in self.deposits])
+        limit = total_deposits/3
+
         if self.loan_balance > 0:
             return "You already have an outstanding loan"
         elif amount <= 100:
@@ -58,7 +62,8 @@ class Account:
             return "Loan amount requested is more than 1/3 of your total deposits"
         else:
             self.loan_balance += amount
-            return f"Your loan of ${amount} was successful. Your new loan balance is ${self.loan_balance}"
+            self.balance +=amount
+            return f"Your loan of ${amount} was successful. Your new account balance is ${self.balance}"
     def repay_loan(self, amount):
         if amount > self.loan_balance:
             self.balance += amount - self.loan_balance
@@ -68,6 +73,7 @@ class Account:
             self.loan_balance -= amount
             return f"You have successfully repaid ${amount} of your loan. Your new loan balance is ${self.loan_balance}"
     def transfer(self, amount, account):
+        total_amount = amount +(amount*transaction_charge_percent/10)
         if amount > self.balance:
             return f"Insufficient funds. Your current balance is ${self.balance}"
         else:
